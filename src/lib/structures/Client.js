@@ -1,0 +1,21 @@
+const { Client } = require('klasa');
+
+/**
+ * The extended Klasa Client to handle next level features.
+ * @extends {KlasaClient}
+ * @since 0.0.1
+ */
+class PaulClient extends Client {
+
+	/**
+	 * Invite link to the support server of the bot.
+	 * @since 0.0.1
+	 * @readonly
+	 */
+	get supportServer() {
+		return '<https://discord.gg/WMXeCbD>';
+	}
+
+}
+
+module.exports = PaulClient;

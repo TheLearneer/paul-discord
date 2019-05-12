@@ -1,0 +1,33 @@
+{
+  "name": "paul-discord",
+  "version": "0.0.1",
+  "description": "Level next discord bot to provide easy to use features with awesome quality.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheLearneer/paul-discord.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "multipurpose",
+    "auto-moderation",
+    "image-manipulation",
+    "fun",
+    "AI"
+  ],
+  "author": "Santosh Bhandari",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TheLearneer/paul-discord/issues"
+  },
+  "homepage": "https://github.com/TheLearneer/paul-discord#readme",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "klasa": "github:dirigeants/klasa",
+    "kurasuta": "^0.2.18"
+  }
+}
