@@ -1,6 +1,6 @@
 {
 	"name": "paul-discord",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "Level next discord bot to provide easy to use features with awesome quality.",
 	"main": "src/index.js",
 	"scripts": {
