@@ -1,5 +1,8 @@
 const { Client } = require('klasa');
 
+// Schema files...
+require('../schema/Schema.User.js');
+
 /**
  * The extended Klasa Client to handle next level features.
  * @extends {KlasaClient}
