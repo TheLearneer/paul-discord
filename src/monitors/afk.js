@@ -29,7 +29,7 @@ class AFKMonitor extends Monitor {
 		}
 
 		// Informing the message author about afk responses...
-		if (afkResponse.length) await msg.send(afkResponse.join('\n'));
+		if (afkResponse.length) await msg.send(`${msg.author} please keep a note that:\n\n${afkResponse.join('\n')}`);
 	}
 
 }
