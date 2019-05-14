@@ -8,6 +8,22 @@ class MessageExtender extends Extendable {
 	}
 
 	/**
+	 * Get image URL from either message attachment or message content URL.
+	 * @since 0.4.0
+	 * @returns {URL}
+	 */
+	getImage() {
+		// Regex to capture image files...
+		const imgRegex = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|webp|gif|png)/i;
+		// Getting image URL from the direct attachment to the message...
+		if (this.attachments.size && imgRegex.test(this.attachments.first().url)) return imgRegex.exec(this.attachments.first().url)[0];
+		// Getting image URL from the message content...
+		else if (imgRegex.test(this.content)) return imgRegex.exec(this.content)[0];
+		// Oops, there is no image...
+		else return null;
+	}
+
+	/**
 	 * Await for reply from the message author.
 	 * @since 0.3.0
 	 * @async

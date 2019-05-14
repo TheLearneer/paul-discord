@@ -1,7 +1,7 @@
 const { ShardingManager } = require('kurasuta');
 const { join } = require('path');
 
-const client = require('./lib/structures/Client');
+const client = require('./lib/Client');
 const { clientOptions, keys } = require('../config');
 
 const sharder = new ShardingManager(join(__dirname, 'main'), {
