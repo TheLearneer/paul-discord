@@ -1,15 +1,13 @@
 const { Event } = require('klasa');
-const Starboard = require('../lib/modules/utility/Starboard');
 
 class MessageReactionRemoveEvent extends Event {
 
-	async run(res, user) {
+	run(res, user) {
 		// Performing action based on emoji...
 		switch (res.emoji.name) {
 			// Star emote for starboard...
 			case '⭐':
-				await Starboard.handleReactionRemove(res, user);
-				break;
+				return this.client.emit('starRemove', res, user);
 		}
 		// Everything is success, time for silent exit...
 		return;

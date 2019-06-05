@@ -1,11 +1,13 @@
 const { Client } = require('klasa');
 
-// Schema files...
-require('./schema/Schema.User.js');
-require('./schema/Schema.Guild.js');
+// Prototype file...
+require('./prototype/Prototype.String')
 
-// Custom store...
-const RawEventStore = require('./RawEventsStore');
+// Schema files...
+require('./schema/Schema.User');
+
+// Custom plugins...
+Client.use(require('../plugins/starboard/index'));
 
 /**
  * The extended Klasa Client to handle next level features.
@@ -13,20 +15,6 @@ const RawEventStore = require('./RawEventsStore');
  * @since 0.1.0
  */
 class PaulClient extends Client {
-
-	constructor(clientOptions) {
-		super(clientOptions);
-
-		/**
-		 * Raw event store of the client.
-		 * @typeof Store
-		 * @since 0.4.0
-		 */
-		this.rawEvents = new RawEventStore(this);
-
-		// Registering custom store...
-		this.registerStore(this.rawEvents);
-	}
 
 	/**
 	 * Invite link to the support server of the bot.
