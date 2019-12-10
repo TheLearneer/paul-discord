@@ -10,4 +10,4 @@ const sharder = new ShardingManager(join(__dirname, 'main'), {
 	token: keys.token
 });
 
-sharder.spawn();
+sharder.spawn().catch((err) => console.log(err));

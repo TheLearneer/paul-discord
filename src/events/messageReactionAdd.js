@@ -1,16 +1,19 @@
 const { Event } = require('klasa');
+const Starboard = require('../lib/structures/Starboard');
+const Giveaway = require('../lib/structures/Giveaway');
 
 class MessageReactionAddEvent extends Event {
 
-	run(res, user) {
-		// Performing action based on emoji...
+	async run(res, user) {
+		if (res.message.partial) await res.message.fetch().catch(() => null);
 		switch (res.emoji.name) {
-			// Star emote for starboard...
 			case '⭐':
-				return this.client.emit('starAdd', res, user);
+				Starboard.handleReactionAdd(res, user);
+				break;
+			case '🎉':
+				Giveaway.handleReactionAdd(res, user);
+				break;
 		}
-		// Everything is success, time for silent exit...
-		return;
 	}
 
 }

@@ -1,26 +1,15 @@
 const { Client } = require('klasa');
 
-// Prototype file...
-require('./prototype/Prototype.String')
+// Prototype files...
+require('./prototype/Prototype.String');
 
 // Schema files...
+require('./schema/Schema.Client');
+require('./schema/Schema.Guild');
 require('./schema/Schema.User');
 
-// Custom plugins...
-Client.use(require('../plugins/starboard/index'));
-
-/**
- * The extended Klasa Client to handle next level features.
- * @extends {KlasaClient}
- * @since 0.1.0
- */
 class PaulClient extends Client {
 
-	/**
-	 * Invite link to the support server of the bot.
-	 * @since 0.1.0
-	 * @readonly
-	 */
 	get supportServer() {
 		return '<https://discord.gg/WMXeCbD>';
 	}
