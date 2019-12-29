@@ -58,11 +58,6 @@ class Giveaway {
 		return this;
 	}
 
-	setID() {
-		this.id = ScheduledTask._generateID(this.client);
-		return this;
-	}
-
 	toJSON() {
 		return {
 			id: this.id,
@@ -104,20 +99,27 @@ class Giveaway {
 				'',
 				`Prize: **${this.prize}**`
 			])
-			.addField('Time Remaining', Duration.toNow(this.startTimestamp + this.duration));
+			.addField('Time Remaining', Duration.toNow(this.duration));
 	}
 
 	buildEmbedEnd() {
 		const winnerList = this.winners.length ? this.winners.map(win => this.client.users.get(win)) : [];
 
-		return new MessageEmbed()
+		const winEmbed = new MessageEmbed()
 			.setColor('RANDOM')
 			.setTitle(`Giveaway #${this.id}`)
-			.setDescription('Giveaway has successfully ended! Congratulations to the winner(s)..')
-			.addField('Winner(s)', winnerList.length ?
-				winnerList.map(win => `**${win.tag}** (\`${win.id}\`)`).join(', ') :
-				'No one participated in the giveaway!')
 			.setTimestamp();
+		if (winnerList.length) {
+			winEmbed.setDescription([
+				'Giveaway has successfully ended! Congratulations to the winner(s)..',
+				'',
+				`Prize: **${this.prize}**`
+				])
+				.addField('Winner(s)', winnerList.map(win => `**${win.tag}** (\`${win.id}\`)`).join(', '))
+		}
+		else winEmbed.setDescription('No one participated in the giveaway!');
+		
+		return winEmbed;
 	}
 
 	async drawWinners() {
@@ -176,12 +178,12 @@ class Giveaway {
 			await this.removeGiveaway();
 			return;
 		}
-		if (!this.endTimestamp && Date.now() < this.startTimestamp + this.duration) {
+		if (!this.endTimestamp && Date.now() < this.duration) {
 			const newEmbed = this.buildEmbed();
 			if (givMsg.embeds[0].fields[0].value !== newEmbed.fields[0].value) await givMsg.edit(newEmbed).catch(() => null);
 			return;
 		}
-		if (!this.endTimestamp && Date.now() >= this.startTimestamp + this.duration) {
+		if (!this.endTimestamp && Date.now() >= this.duration) {
 			await this.drawWinners();
 			const embedFinal = this.buildEmbedEnd();
 			await givMsg.edit(embedFinal).catch(() => null);
@@ -215,10 +217,11 @@ class Giveaway {
 		if (user.bot) return;
 		const { message } = res;
 		const { settings } = message.client;
-		const giveaway = settings.giveaway.find(giv => giv.message === message.id);
+		let giveaway = settings.giveaway.find(giv => giv.message === message.id);
 		if (!giveaway) return;
 		if (!giveaway.users.includes(user.id)) return;
 		const givIndex = settings.giveaway.findIndex(giv => giv === giveaway);
+		giveaway.users = giveaway.users.filter(usr => usr !== user.id);
 		await settings.update('giveaway', giveaway, { arrayPosition: givIndex });
 	}
 
